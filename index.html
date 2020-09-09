@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,12 +9,13 @@
     <link rel="stylesheet" href="style.css">
     <title>Chat App</title>
 </head>
+
 <body>
     <div class="top"></div>
 
     <div class="container-fluid bg-white mt-4 shadow-lg rounded chatbox">
         <div class="row h-100">
-            <div class="col-md-4 pr-0">
+            <div class="col-md-4 pr-0 d-none d-md-block">
                 <div class="card h-100">
                     <div class="card-header">
                         <div class="row">
@@ -24,13 +26,13 @@
 
                             </div>
                         </div>
-            
+
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item" style="background-color: #f0f0f0;">
                             <input type="text" placeholder="Search or new chat" class="form-control form-rounded">
                         </li>
-                        <li class="list-group-item list-group-item-action">
+                        <li class="list-group-item list-group-item-action" onclick="startChat(1)">
                             <div class="row">
                                 <div class="col-md-2">
                                     <img class="friend-pic" src="images/ppp.jpg" alt="">
@@ -67,17 +69,17 @@
                 </div>
             </div>
             <div class="col-md-8 pl-0">
-                <div class="card h-100">
+                <div id="chatDiv" class="card h-100 hide">
                     <div class="card-header">
                         <div class="row">
-                            <div class="col-md-1">
+                            <div class="col-2 col-sm-2 col-md-2 col-lg-1">
                                 <img class="profile-pic" src="images/ppp.jpg" alt="">
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-6 col-sm-6 col-md-6 col-lg-8">
                                 <div class="name">Any name</div>
                                 <div class="under-name pt-1">Last Seen 12:00 PM</div>
                             </div>
-                            <div class="col-md-2 pt-2 icon">
+                            <div class="col-4 col-sm-4 col-md-4 col-lg-3 pt-2 icon">
                                 <i class="fas fa-search"></i>
                                 <i class="fas fa-paperclip ml-4"></i>
                                 <i class="fas fa-ellipsis-v ml-4"></i>
@@ -89,24 +91,31 @@
                     </div>
                     <div class="card-footer">
                         <div class="row">
-                            <div class="col-md-1 icon">
+                            <div class="col-1 col-sm-1 col-md-1 col-lg-1 icon">
                                 <i class="fas fa-grin fa-2x"></i>
                             </div>
-                            <div class="col-md-10">
+                            <div class="col-10 col-sm-10 col-md-10 col-lg-10">
                                 <input type="text" placeholder="Type here..." class="form-control form-rounded">
                             </div>
-                            <div class="col-md-1 icon">
+                            <div class="col-1 col-sm-1 col-md-1 col-lg-1 icon">
                                 <i class="fas fa-microphone fa-2x"></i>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div id="divStart" class="text-center">
+                    <i class="fas fa-comments pt-5 mx-auto" style="font-size: 250px;"></i>
+                    <h1 class="pt-4 mx-1">Let's chat with your friends</h1>
+
+                </div>
 
             </div>
         </div>
     </div>
-    
 
+
+    <script src="app.js"></script>
     <script src="js/bootstrap.min.js"></script>
 </body>
+
 </html>

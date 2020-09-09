@@ -54,3 +54,6 @@ body {
     color: #9ca1a3;
     /* font-size: 16px; */
 }
+.hide {
+    display: none;
+}
