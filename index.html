@@ -15,8 +15,8 @@
 
     <div class="container-fluid bg-white mt-4 shadow-lg rounded chatbox">
         <div class="row h-100">
-            <div class="col-md-4 pr-0 d-none d-md-block">
-                <div class="card h-100">
+            <div class="col-md-4 pr-0 d-none d-md-block" id="chat-list-col">
+                <div class="card">
                     <div class="card-header">
                         <div class="row">
                             <div class="col-md-7">
@@ -34,10 +34,10 @@
                         </li>
                         <li class="list-group-item list-group-item-action" onclick="startChat(1)">
                             <div class="row">
-                                <div class="col-md-2">
+                                <div class="col-2 col-sm-2 col-md-3 col-lg-2">
                                     <img class="friend-pic" src="images/ppp.jpg" alt="">
                                 </div>
-                                <div class="col-md-10" style="cursor: pointer;">
+                                <div class="col-10 col-sm-10 col-md-9 col-lg-10" style="cursor: pointer;">
                                     <div class="name">Any name</div>
                                     <div class="under-name pt-1">the chat shown here....</div>
                                 </div>
@@ -45,10 +45,10 @@
                         </li>
                         <li class="list-group-item list-group-item-action">
                             <div class="row">
-                                <div class="col-md-2">
+                                <div class="col-2 col-sm-2 col-md-3 col-lg-2">
                                     <img class="friend-pic" src="images/ppp.jpg" alt="">
                                 </div>
-                                <div class="col-md-10" style="cursor: pointer;">
+                                <div class="col-10 col-sm-10 col-md-9 col-lg-10" style="cursor: pointer;">
                                     <div class="name">Any name</div>
                                     <div class="under-name pt-1">the chat shown here....</div>
                                 </div>
@@ -56,10 +56,10 @@
                         </li>
                         <li class="list-group-item list-group-item-action">
                             <div class="row">
-                                <div class="col-md-2">
+                                <div class="col-2 col-sm-2 col-md-3 col-lg-2">
                                     <img class="friend-pic" src="images/ppp.jpg" alt="">
                                 </div>
-                                <div class="col-md-10" style="cursor: pointer;">
+                                <div class="col-10 col-sm-10 col-md-9 col-lg-10" style="cursor: pointer;">
                                     <div class="name">Any name</div>
                                     <div class="under-name pt-1">the chat shown here....</div>
                                 </div>
@@ -69,13 +69,17 @@
                 </div>
             </div>
             <div class="col-md-8 pl-0">
-                <div id="chatDiv" class="card h-100 hide">
+                <div id="chatDiv" class="card d-none">
                     <div class="card-header">
                         <div class="row">
+                            <div class="col-1 col-sm-1 col-md-1 col-lg-1">
+                                <i class="fas fa-bars d-md-none" style="cursor: pointer;" onclick="showChatList()"></i>
+
+                            </div>
                             <div class="col-2 col-sm-2 col-md-2 col-lg-1">
                                 <img class="profile-pic" src="images/ppp.jpg" alt="">
                             </div>
-                            <div class="col-6 col-sm-6 col-md-6 col-lg-8">
+                            <div class="col-5 col-sm-5 col-md-5 col-lg-7">
                                 <div class="name">Any name</div>
                                 <div class="under-name pt-1">Last Seen 12:00 PM</div>
                             </div>
@@ -86,7 +90,27 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" id="msg">
+                        <div class="row">
+                            <div class="col-2 col-sm-1 col-md-1 col-lg-1">
+                                <img src="images/ppp.jpg" alt="" class="profile-pic">
+                            </div>
+                            <div class="col-6 col-sm-6 col-md-5 col-lg-5">
+                                <p id="receive">this is a text jfgbskdf mdnfbkfbmnfbgjdrfb dfbjg send by one of my friend
+                                    <span class="time">12:15 am</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row justify-content-end">
+                            <!-- <div class="col-2 col-sm-1 col-md-1 col-lg-1">
+                                <img src="images/ppp.jpg" alt="" class="profile-pic">
+                            </div> -->
+                            <div class="col-6 col-sm-6 col-md-5 col-lg-5">
+                                <p id="send">this is a text jfgbskdf mdnfbkfbmnfbgjdrfb dfbjg send by one of my friend
+                                    <span class="time">12:15 am</span>
+                                </p>
+                            </div>
+                        </div>
 
                     </div>
                     <div class="card-footer">
@@ -95,7 +119,7 @@
                                 <i class="fas fa-grin fa-2x"></i>
                             </div>
                             <div class="col-10 col-sm-10 col-md-10 col-lg-10">
-                                <input type="text" placeholder="Type here..." class="form-control form-rounded">
+                                <input id="input-msg" onclick="onKeyPress()" type="text" placeholder="Type here..." class="form-control form-rounded">
                             </div>
                             <div class="col-1 col-sm-1 col-md-1 col-lg-1 icon">
                                 <i class="fas fa-microphone fa-2x"></i>
@@ -106,6 +130,7 @@
                 <div id="divStart" class="text-center">
                     <i class="fas fa-comments pt-5 mx-auto" style="font-size: 250px;"></i>
                     <h1 class="pt-4 mx-1">Let's chat with your friends</h1>
+                    <button class="btn bg-success text-white d-md-none" onclick="showChatList()">Get started</button>
 
                 </div>
 
@@ -115,7 +140,7 @@
 
 
     <script src="app.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <!-- <script src="js/bootstrap.min.js"></script> -->
 </body>
 
 </html>
