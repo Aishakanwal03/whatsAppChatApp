@@ -19,10 +19,42 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
-                            <div class="col-md-7">
-                                <img class="profile-pic" src="images/ppp.jpg" alt="">
+                            <div class="col-7 col-sm-7 col-md-7">
+                                <img class="profile-pic" src="images/ppp.jpg" alt="" id="user-image">
                             </div>
-                            <div class="col-md-5">
+                            <div class="col-5 col-sm-5 col-md-5">
+                                <div>
+                                    <button class="btn btn-secondary dropdown-toggle" type="button"
+                                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                        Menu
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="cursor: pointer;">
+                                        <a class="dropdown-item" id="link-new-chat" data-toggle="modal" data-target="#modal-friend-list" onclick="populate()">New Chat</a>
+                                        <a class="dropdown-item d-none" id="sign-out" onclick="signOut()">Sign Out</a>
+                                        <a class="dropdown-item d-none" id="sign-in" onclick="signIn()" >sign In</a>
+                                    </div>
+                                    <div class="modal fade" id="modal-friend-list">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        Friend List
+                                                        <span class="close" data-dismiss="modal" style="cursor: pointer;">&times</span>
+                                                    </div>
+                                                    <ul class="list-group list-group-flush" id="lst-friend">
+                                                        <!-- <div>
+                                                        <span class="spinner-border">
+                                                        </span>
+                                                        </div> -->
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
 
                             </div>
                         </div>
@@ -77,11 +109,11 @@
 
                             </div>
                             <div class="col-2 col-sm-2 col-md-2 col-lg-1">
-                                <img class="profile-pic" src="images/ppp.jpg" alt="">
+                                <img class="profile-pic" id="chat-div-image" src="images/ppp.jpg" alt="">
                             </div>
                             <div class="col-5 col-sm-5 col-md-5 col-lg-7">
-                                <div class="name">Any name</div>
-                                <div class="under-name pt-1">Last Seen 12:00 PM</div>
+                                <div class="name" id="chat-div-name">Any name</div>
+                                <div class="under-name pt-1" id="chat-div-lastseen">Last Seen 12:00 PM</div>
                             </div>
                             <div class="col-4 col-sm-4 col-md-4 col-lg-3 pt-2 icon">
                                 <i class="fas fa-search"></i>
@@ -96,7 +128,8 @@
                                 <img src="images/ppp.jpg" alt="" class="profile-pic">
                             </div>
                             <div class="col-6 col-sm-6 col-md-5 col-lg-5">
-                                <p id="receive">this is a text jfgbskdf mdnfbkfbmnfbgjdrfb dfbjg send by one of my friend
+                                <p id="receive">this is a text jfgbskdf mdnfbkfbmnfbgjdrfb dfbjg send by one of my
+                                    friend
                                     <span class="time">12:15 am</span>
                                 </p>
                             </div>
@@ -119,7 +152,8 @@
                                 <i class="fas fa-grin fa-2x"></i>
                             </div>
                             <div class="col-10 col-sm-10 col-md-10 col-lg-10">
-                                <input id="input-msg" onclick="onKeyPress()" type="text" placeholder="Type here..." class="form-control form-rounded">
+                                <input id="input-msg" onclick="onKeyPress()" type="text" placeholder="Type here..."
+                                    class="form-control form-rounded">
                             </div>
                             <div class="col-1 col-sm-1 col-md-1 col-lg-1 icon">
                                 <i class="fas fa-microphone fa-2x"></i>
@@ -131,6 +165,9 @@
                     <i class="fas fa-comments pt-5 mx-auto" style="font-size: 250px;"></i>
                     <h1 class="pt-4 mx-1">Let's chat with your friends</h1>
                     <button class="btn bg-success text-white d-md-none" onclick="showChatList()">Get started</button>
+                    <br>
+                    <!-- <button class="btn bg-primary text-white" onclick="signIn()">Sign In</button>
+                    <button class="btn bg-primary text-white" onclick="signOut()">Sign Out</button> -->
 
                 </div>
 
@@ -139,7 +176,38 @@
     </div>
 
 
+
+
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-auth.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        var firebaseConfig = {
+            apiKey: "AIzaSyCgLTcpvjZZDyirmfL-OxPOalAiV8-X7OA",
+            authDomain: "a-k-chatapplication.firebaseapp.com",
+            databaseURL: "https://a-k-chatapplication.firebaseio.com",
+            projectId: "a-k-chatapplication",
+            storageBucket: "a-k-chatapplication.appspot.com",
+            messagingSenderId: "45035950344",
+            appId: "1:45035950344:web:8284fb622cabcf891f5cbd",
+            measurementId: "G-XQZ4919D9W"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        // firebase.analytics();
+    </script>
     <script src="app.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
     <!-- <script src="js/bootstrap.min.js"></script> -->
 </body>
 
