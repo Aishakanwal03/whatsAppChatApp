@@ -32,7 +32,7 @@
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="cursor: pointer;">
                                         <a class="dropdown-item" id="link-new-chat" data-toggle="modal" data-target="#modal-friend-list" onclick="populate()">New Chat</a>
                                         <a class="dropdown-item d-none" id="sign-out" onclick="signOut()">Sign Out</a>
-                                        <a class="dropdown-item d-none" id="sign-in" onclick="signIn()" >sign In</a>
+                                        <a class="dropdown-item" id="sign-in" onclick="signIn()" >sign In</a>
                                     </div>
                                     <div class="modal fade" id="modal-friend-list">
                                         <div class="modal-dialog">
@@ -60,10 +60,8 @@
                         </div>
 
                     </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item" style="background-color: #f0f0f0;">
-                            <input type="text" placeholder="Search or new chat" class="form-control form-rounded">
-                        </li>
+                    <ul class="list-group list-group-flush" id="lst-chat">
+                        
                         <li class="list-group-item list-group-item-action" onclick="startChat(1)">
                             <div class="row">
                                 <div class="col-2 col-sm-2 col-md-3 col-lg-2">
