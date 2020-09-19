@@ -4,6 +4,7 @@ var chatKey = ""
 //////////////////////////////////////////////////
 
 let startChat = (friendKey, friendName, friendPhoto) => {
+
     var friendList = {
         friendId: friendKey,
         userId: currentUserKey,
@@ -28,45 +29,76 @@ let startChat = (friendKey, friendName, friendPhoto) => {
                     document.getElementById("chatDiv").classList.remove("d-none")
                     document.getElementById("divStart").classList.add("d-none")
                     document.getElementById("chat-list-col").classList.add("d-none")
+                    console.log("hello")
                 }
             }).getKey();
         }
         else {
             document.getElementById("chatDiv").classList.remove("d-none")
             document.getElementById("divStart").classList.add("d-none")
+            document.getElementById("chat-list-col").classList.add("d-none")
         }
         /////////////display frnd name and photo
 
         document.getElementById("chat-div-name").innerHTML = friendName
         document.getElementById("chat-div-image").src = friendPhoto
 
+        onKeyPress();
+        document.getElementById('input-msg').value = ""
+        document.getElementById('input-msg').focus()
+
+
         //////////// display chat messages //////////
 
-        loadChatMessage(chatKey)
+        loadChatMessage(chatKey, friendPhoto)
     })
 }
 
 /////// loadChatMessage function //////
 
-let loadChatMessage = (chatKey) => {
+let loadChatMessage = (chatKey , friendPhoto) => {
     var db = firebase.database().ref("chatMessages").child(chatKey);
     db.on('value', function (chats) {
+        var messageDisplay = ""
         chats.forEach(function (data) {
-            var message = data.val()
-            var dataTime = message.dataTime.split(",")
-            var messageDisplay = `<div class="row justify-content-end">
-            <div class="col-6 col-sm-6 col-md-5 col-lg-5">
-                 <p id="send">
-                     ${message.msg}
-                     <span class="time">${dataTime[1]}</span>
-                 </p>
-             </div>
-         </div>`;
-            document.getElementById("msg").innerHTML += messageDisplay
-            document.getElementById("input-msg").value = ""
+            var chat = data.val()
+            var dataTime = chat.dataTime.split(",")
+            // var sent = false
+            // firebase.database().ref('frient-list').child(chat.userId);
+            
+            if (chat.userId !== currentUserKey){
+                messageDisplay += `<div class="row">
+                                           <div class="col-2 col-sm-1 col-md-1 col-lg-1">
+                                                <img src='${friendPhoto}' alt="" class="profile-pic">
+                                            </div>
+                                            <div class="col-6 col-sm-6 col-md-5 col-lg-5">
+                                                <p id="receive">${chat.msg}
+                                                    <span class="time">${dataTime[1]}</span>
+                                                </p>
+                                            </div>
+                                        </div>`;
+            // document.getElementById("msg").innerHTML = messageDisplay
+            }
+            else {
+                messageDisplay += `<div class="row justify-content-end">
+                                    <div class="col-6 col-sm-6 col-md-5 col-lg-5">
+                                       <p id="send">
+                                             ${chat.msg}
+                                             <span class="time">${dataTime[1]}</span>
+                                       </p>
+                                    </div>
+                                </div>`;
+                 
 
-            document.getElementById("msg").scrollTo(0, document.getElementById("msg").clientHeight)
+            }
+
+            
+            
         })
+        document.getElementById("msg").innerHTML = messageDisplay
+            // document.getElementById("input-msg").value = ""
+
+            document.getElementById("msg").scrollTo(0, document.getElementById("msg").scrollHeight)
     })
 }
 
@@ -80,7 +112,6 @@ let onKeyPress = () => {
     document.addEventListener('keydown', function (key) {
         if (key.which === 13) {
             sendMessage();
-
         }
     })
 }
@@ -88,6 +119,7 @@ let onKeyPress = () => {
 let sendMessage = () => {
     // var chatMessage = {msg: ${document.getElementById("input-msg").value} }
     var chatMessage = {
+        userId: currentUserKey,
         msg: document.getElementById('input-msg').value,
         dataTime: new Date().toLocaleString(),
     }
@@ -96,24 +128,21 @@ let sendMessage = () => {
             alert(error)
         }
         else {
-            var message = `<div class="row justify-content-end">
-                       <div class="col-6 col-sm-6 col-md-5 col-lg-5">
-                            <p id="send">
-                                ${document.getElementById("input-msg").value}
-                                <span class="time">12:15 am</span>
-                            </p>
-                        </div>
-                    </div>`;
-            document.getElementById("msg").innerHTML += message
+        //     var message = `<div class="row justify-content-end">
+        //                <div class="col-6 col-sm-6 col-md-5 col-lg-5">
+        //                     <p id="send">
+        //                         ${document.getElementById("input-msg").value}
+        //                         <span class="time">12:15 am</span>
+        //                     </p>
+        //                 </div>
+        //             </div>`;
+            // document.getElementById("msg").innerHTML += message
             document.getElementById("input-msg").value = ""
 
-            document.getElementById("msg").scrollTo(0, document.getElementById("msg").clientHeight)
+            document.getElementById("msg").scrollTo(0, document.getElementById("msg").scrollHeight)
 
         }
     })
-
-
-
 }
 let loadChatList = () => {
     var db = firebase.database().ref('friend-list');
@@ -123,7 +152,7 @@ let loadChatList = () => {
                                                          </li>`
         lists.forEach(function (data) {
             var lst = data.val();
-            console.log(lst)
+            // console.log(lst)
             var friendKey = '';
             if (lst.friendId === currentUserKey) {
                 friendKey = lst.userId
@@ -145,7 +174,7 @@ let loadChatList = () => {
             }
             else if (lst.userId === currentUserKey) {
                 friendKey = lst.friendId;
-                console.log(`elseif ${friendKey}`)
+                // console.log(`elseif ${friendKey}`)
                 firebase.database().ref('users').child(friendKey).on('value', function (data) {
                     var user = data.val()
                     document.getElementById('lst-chat').innerHTML += `<li class="list-group-item list-group-item-action" onclick="startChat('${data.key}', '${user.name}', '${user.photoURL}')">
@@ -161,8 +190,6 @@ let loadChatList = () => {
                                                                         </li>`
                 })
             }
-
-
         })
     })
 }

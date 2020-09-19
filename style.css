@@ -61,22 +61,29 @@ body {
 #receive {
     background-color: lightgreen;
     border-radius: 1rem;
-    padding: 10px 15px;
+    padding: 10px 10px 5px 10px;
     display: inline-block;
 }
 .time {
     font-size: 12px;
     color: rgb(109, 103, 103);
     float: right;
-    margin-top: 3%;
+    padding-top: 10%;
+    margin-left: 15px;
 }
-#send {
+#send{
+    /* display: inline-block; */
     background-color: whitesmoke;
     border-radius: 1rem;
-    padding: 10px 15px;
-    display: inline-block;
+    padding: 10px 10px 5px 10px;
+    
     float: right;
 }
+/* #send span, #receive span {
+    float: right;
+    margin-top: 10%;
+
+} */
 #msg {
     overflow-y: scroll;
     overflow-x: hidden;
