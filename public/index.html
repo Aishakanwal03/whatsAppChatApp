@@ -98,25 +98,37 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-8 pl-0">
-                <div id="chatDiv" class="card d-none">
+            <div class="col-md-8">
+                <div id="chatDiv" class="card d-none pl-0">
                     <div class="card-header">
                         <div class="row">
-                            <div class="col-1 col-sm-1 col-md-1 col-lg-1">
-                                <i class="fas fa-bars d-md-none" style="cursor: pointer;" onclick="showChatList()"></i>
+                            <div class="col-1 col-sm-1 col-md-1 col-lg-1 icon pt-2">
+                                <i class="fas fa-arrow-left d-md-none" style="cursor: pointer;" onclick="showChatList()"></i>
 
                             </div>
                             <div class="col-2 col-sm-2 col-md-2 col-lg-1">
                                 <img class="profile-pic" id="chat-div-image" src="images/ppp.jpg" alt="">
                             </div>
-                            <div class="col-5 col-sm-5 col-md-5 col-lg-7">
-                                <div class="name" id="chat-div-name">Any name</div>
-                                <div class="under-name pt-1" id="chat-div-lastseen">Last Seen 12:00 PM</div>
+                            <div class="col-4 col-sm-5 col-md-5 col-lg-7">
+                                <div class="name py-auto" id="chat-div-name">Any name</div>
+                                <!-- <div class="under-name pt-1" id="chat-div-lastseen">Last Seen 12:00 PM</div> -->
                             </div>
                             <div class="col-4 col-sm-4 col-md-4 col-lg-3 pt-2 icon">
                                 <i class="fas fa-search"></i>
-                                <i class="fas fa-paperclip ml-4"></i>
-                                <i class="fas fa-ellipsis-v ml-4"></i>
+                                <!-- <button class="btn btn-secondary dropdown-toggle" type="button"
+                                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                        Menu
+                                    </button> -->
+                                <span class="fas fa-paperclip ml-3" data-toggle="dropdown" ></span>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="cursor: pointer;">
+                                    <a class="dropdown-item" onclick="selectImage()">Image
+                                        <input type="file" id="image-file" onchange="sendImage(this)" accept="image/*" class="d-none">
+                                    </a>
+                                    <a class="dropdown-item">Video</a>
+                                    <a class="dropdown-item">Documents</a>
+                                </div>
+                                <i class="fas fa-ellipsis-v ml-3"></i>
                             </div>
                         </div>
                     </div>
@@ -146,9 +158,9 @@
                             <div class="col-1 col-sm-1 col-md-1 col-lg-1 icon">
                                 <i class="fas fa-grin fa-2x"></i>
                             </div>
-                            <div class="col-10 col-sm-10 col-md-10 col-lg-10">
+                            <div class="col-9 col-sm-10 col-md-10 col-lg-10">
                                 <input id="input-msg" type="text" placeholder="Type here..."
-                                    class="form-control form-rounded">
+                                    class="form-control form-rounded ml-2">
                             </div>
                             <div class="col-1 col-sm-1 col-md-1 col-lg-1 icon">
                                 <i class="fas fa-microphone fa-2x"></i>

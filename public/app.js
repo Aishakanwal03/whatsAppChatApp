@@ -1,6 +1,15 @@
 var currentUserKey = ""
 var chatKey = ""
 
+// send message on key press enter
+
+document.addEventListener('keydown', function (key) {
+    if (key.which === 13) {
+        sendMessage();
+    }
+})
+
+
 //////////////////////////////////////////////////
 
 let startChat = (friendKey, friendName, friendPhoto) => {
@@ -43,7 +52,6 @@ let startChat = (friendKey, friendName, friendPhoto) => {
         document.getElementById("chat-div-name").innerHTML = friendName
         document.getElementById("chat-div-image").src = friendPhoto
 
-        onKeyPress();
         document.getElementById('input-msg').value = ""
         document.getElementById('input-msg').focus()
 
@@ -56,49 +64,55 @@ let startChat = (friendKey, friendName, friendPhoto) => {
 
 /////// loadChatMessage function //////
 
-let loadChatMessage = (chatKey , friendPhoto) => {
+let loadChatMessage = (chatKey, friendPhoto) => {
     var db = firebase.database().ref("chatMessages").child(chatKey);
     db.on('value', function (chats) {
         var messageDisplay = ""
         chats.forEach(function (data) {
             var chat = data.val()
             var dataTime = chat.dataTime.split(",")
-            // var sent = false
+            var msg = ''
+            if (chat.msg.indexOf('base64') !== -1){
+                msg = `<img src='${chat.msg}' class="img-fluid">`
+            }
+            else {
+                msg = chat.msg
+            }
             // firebase.database().ref('frient-list').child(chat.userId);
-            
-            if (chat.userId !== currentUserKey){
+
+            if (chat.userId !== currentUserKey) {
                 messageDisplay += `<div class="row">
                                            <div class="col-2 col-sm-1 col-md-1 col-lg-1">
                                                 <img src='${friendPhoto}' alt="" class="profile-pic">
                                             </div>
                                             <div class="col-6 col-sm-6 col-md-5 col-lg-5">
-                                                <p id="receive">${chat.msg}
+                                                <p id="receive">${msg}
                                                     <span class="time">${dataTime[1]}</span>
                                                 </p>
                                             </div>
                                         </div>`;
-            // document.getElementById("msg").innerHTML = messageDisplay
+                // document.getElementById("msg").innerHTML = messageDisplay
             }
             else {
                 messageDisplay += `<div class="row justify-content-end">
                                     <div class="col-6 col-sm-6 col-md-5 col-lg-5">
                                        <p id="send">
-                                             ${chat.msg}
+                                             ${msg}
                                              <span class="time">${dataTime[1]}</span>
                                        </p>
                                     </div>
                                 </div>`;
-                 
+
 
             }
 
-            
-            
+
+
         })
         document.getElementById("msg").innerHTML = messageDisplay
-            // document.getElementById("input-msg").value = ""
+        // document.getElementById("input-msg").value = ""
 
-            document.getElementById("msg").scrollTo(0, document.getElementById("msg").scrollHeight)
+        document.getElementById("msg").scrollTo(0, document.getElementById("msg").scrollHeight)
     })
 }
 
@@ -108,13 +122,6 @@ let showChatList = () => {
     document.getElementById("chatDiv").classList.add("d-none")
 }
 
-let onKeyPress = () => {
-    document.addEventListener('keydown', function (key) {
-        if (key.which === 13) {
-            sendMessage();
-        }
-    })
-}
 
 let sendMessage = () => {
     // var chatMessage = {msg: ${document.getElementById("input-msg").value} }
@@ -128,14 +135,14 @@ let sendMessage = () => {
             alert(error)
         }
         else {
-        //     var message = `<div class="row justify-content-end">
-        //                <div class="col-6 col-sm-6 col-md-5 col-lg-5">
-        //                     <p id="send">
-        //                         ${document.getElementById("input-msg").value}
-        //                         <span class="time">12:15 am</span>
-        //                     </p>
-        //                 </div>
-        //             </div>`;
+            //     var message = `<div class="row justify-content-end">
+            //                <div class="col-6 col-sm-6 col-md-5 col-lg-5">
+            //                     <p id="send">
+            //                         ${document.getElementById("input-msg").value}
+            //                         <span class="time">12:15 am</span>
+            //                     </p>
+            //                 </div>
+            //             </div>`;
             // document.getElementById("msg").innerHTML += message
             document.getElementById("input-msg").value = ""
 
@@ -143,6 +150,46 @@ let sendMessage = () => {
 
         }
     })
+}
+
+/////////////// select image function ///////////////
+
+let selectImage = () => {
+    document.getElementById('image-file').click();
+
+}
+
+let sendImage = (event) => {
+    var file = event.files[0];
+    if (!file.type.match('image.*')) {
+        alert('Please select image only')
+    }
+    else {
+        var reader = new FileReader();
+        reader.addEventListener("load", function () {
+            // alert(reader.result);
+            var chatMessage = {
+                userId: currentUserKey,
+                msg: reader.result,
+                dataTime: new Date().toLocaleString(),
+            }
+            firebase.database().ref("chatMessages").child(chatKey).push(chatMessage, function (error) {
+                if (error) {
+                    alert(error)
+                }
+                else {
+                    document.getElementById("input-msg").value = ""
+
+                    document.getElementById("msg").scrollTo(0, document.getElementById("msg").scrollHeight)
+
+                }
+            })
+        }, false)
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
 }
 let loadChatList = () => {
     var db = firebase.database().ref('friend-list');
@@ -300,6 +347,7 @@ let onFirebaseStateChanged = () => {
             // User is signed out.
             document.getElementById("user-image").src = "images/ppp.jpg"
             document.getElementById("user-image").title = ""
+            document.getElementById("lst-chat").innerHTML = ""
 
             document.getElementById("sign-in").classList.remove("d-none")
             document.getElementById("sign-out").classList.add("d-none")
